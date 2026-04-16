@@ -20,8 +20,8 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.category_name}'
 STATUS_CHOICE = (
-    (0, "Draft"),
-    (1, "Published")
+    (0,"Draft"),
+    (1,"Published")
 )
 
 class Blog(models.Model):
