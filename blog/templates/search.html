@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content%} {% for i in blog %}
+
+<hr />
+
+<div class="text-success">
+  <p>Your search result : {{ keyword }}</p>
+  <hr />
+</div>
+
+<div
+  class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary"
+  style="background-image: url('{{i.featured_image.url}}');   background-size: contain;
+  background-position: center; 
+  background-repeat: no-repeat;"
+>
+  <div class="col-lg-6 px-0">
+    <h1 class="display-4 fst-italic">{{i.title}}</h1>
+    <p class="lead my-3">{{i.short_description}}</p>
+    <p class="lead mb-0">
+      <a href="{% url 'single_blog' i.slug%}" class="text-body-emphasis fw-bold"
+        >Continue reading...</a
+      >
+    </p>
+  </div>
+</div>
+{% endfor %} {% endblock %}

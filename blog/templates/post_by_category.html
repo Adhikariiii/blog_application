@@ -19,7 +19,11 @@
       <h1 class="display-4 fst-italic">{{post.title}}</h1>
       <p class="lead my-3">{{post.short_description}}</p>
       <p class="lead mb-0">
-        <a href="#" class="text-body-emphasis fw-bold">Continue reading...</a>
+        <a
+          href="{% url 'single_blog' post.slug%}"
+          class="text-body-emphasis fw-bold"
+          >Continue reading...</a
+        >
       </p>
     </div>
   </div>
@@ -43,7 +47,10 @@
           <p class="card-text mb-auto">
             {{post.short_description |truncatewords:20}}
           </p>
-          <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+          <a
+            href="{% url 'single_blog' post.slug%}"
+            class="icon-link gap-1 icon-link-hover stretched-link"
+          >
             Continue reading
             <svg class="bi" aria-hidden="true">
               <use xlink:href="#chevron-right"></use>
