@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login, logout as log_out
+from django.contrib import messages
 from .models import Category, Blog
 from about.models import About, Socials
 from django.db.models import Q
@@ -56,3 +58,49 @@ def search(request):
           'keyword': keyword
     }
     return render(request, 'search.html', context)
+
+def register(request):
+    if request.method == 'POST':
+        #  register user
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        if password1 == password2: 
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'Email already exists try another one')
+                return redirect('register')
+            elif User.objects.filter(username=username).exists():
+                    messages.info(request, 'Email already exists try another one')
+                    return redirect('register')
+            else:
+                 user = User.objects.create_user(username=username, password=password1, email=email)
+                 user.save()
+                 messages.info(request, 'user registered successfully')
+                 return redirect('home')
+        else: 
+               messages.info(request, 'Email already exists try another one')
+               return redirect('register')
+    else:
+         return render(request, 'register.html')
+
+def login(request):
+     if request.method == 'POST':
+          username = request.POST['username']
+          password = request.POST['password']
+
+          user = authenticate(username=username, password=password)
+          if user is not None:
+            auth_login(request, user)
+            messages.info(request, 'Welcome to the site')
+            return redirect('home')
+          else:
+            messages.info(request, 'username or password did not match')
+            return redirect('login')
+     return render(request, 'login.html')
+
+def logout(request):
+    log_out(request)
+    messages.info(request, 'You are logged out')
+    return redirect('home')
