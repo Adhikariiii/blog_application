@@ -36,3 +36,25 @@ def add_category(request):
     }
 
     return render(request, 'dashboard/add_category.html', context)
+
+
+def edit_category(request, pk ):
+    category_edit = Category.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = AddCategory(request.POST, instance=category_edit)
+        if form.is_valid():
+            form.save()
+            return redirect('categories')           
+    form = AddCategory(instance=category_edit)
+    context = {
+        'category_edit': category_edit,
+        'form': form
+    }
+    return render(request, 'dashboard/edit_category.html', context)
+
+@login_required(login_url='login')
+def delete_category(request, pk):
+    category_delete = Category.objects.get(pk=pk)
+    category_delete.delete()
+    return redirect('categories')
