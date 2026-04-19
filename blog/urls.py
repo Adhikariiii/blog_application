@@ -1,5 +1,5 @@
 from  . import views
-from django.urls import path
+from django.urls import path, re_path
 
 
 urlpatterns = [
@@ -8,6 +8,8 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('category/<int:category_id>', views.post_by_category, name='post_by_category'),
-    path('<slug:slug>/', views.blog, name='single_blog'),
-    path('blog/search', views.search, name='search'),
+    path('blog/<slug:slug>/', views.blog, name='single_blog'),
+    path('search', views.search, name='search'),
+
+
 ]

@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content%}
+<div class="row">
+  {% include 'dashboard/sidebar.html' %}
+  <div class="col-md-9">
+    <form action="{% url 'add_category' %}" method="POST">
+      {{user.username}} {% csrf_token %} {{form}}
+      <button type="submit" class="btn btn-warning">Add Category</button>
+    </form>
+  </div>
+</div>
+{% endblock%}

@@ -7,6 +7,7 @@ from about.models import About, Socials
 from django.db.models import Q
 
 
+
 # Create your views here.
 def home(request):
     category = Category.objects.all()
@@ -42,12 +43,14 @@ def post_by_category(request, category_id):
         return render(request, 'post_by_category.html', context)
 
 def blog(request, slug):
-
-        blog = get_object_or_404(Blog,  slug=slug)
-        context = {
-            'blog': blog
-                }
-        return render(request, 'blog.html', context )
+        try:
+            blog = get_object_or_404(Blog,  slug=slug)
+            context = {
+                'blog': blog
+                    }
+            return render(request, 'blog.html', context )
+        except:
+             return render(request, 'error_page.html')
 
 def search(request):
     keyword = request.GET.get('keyword')

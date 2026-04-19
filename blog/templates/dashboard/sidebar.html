@@ -1,0 +1,51 @@
+<div class="col-md-3">
+  <nav>
+    <div
+      class="nav flex-column nav-pills"
+      id="v-pills-tab"
+      role="tablist"
+      aria-orientation="vertical"
+    >
+      <a
+        class="nav-link bg text-dark {% if request.path == '/dashboard/' %}bg-warning {% endif %}"
+        id="v-pills-home-tab"
+        data-toggle="pill"
+        href="{% url 'dashboard' %}"
+        role="tab"
+        aria-controls="v-pills-home"
+        aria-selected="true"
+        >Dashboard</a
+      >
+      <a
+        class="nav-link text-dark {% if 'categories/' in request.path%} bg-warning {% endif %}"
+        id="v-pills-profile-tab"
+        data-toggle="pill"
+        href="{% url 'categories' %}"
+        role="tab"
+        aria-controls="v-pills-profile"
+        aria-selected="false"
+        >Categories</a
+      >
+      <a
+        class="nav-link text-dark"
+        id="v-pills-messages-tab"
+        data-toggle="pill"
+        href="#v-pills-messages"
+        role="tab"
+        aria-controls="v-pills-messages"
+        aria-selected="false"
+        >Post</a
+      >
+      <a
+        class="nav-link text-dark"
+        id="v-pills-settings-tab"
+        data-toggle="pill"
+        href="#v-pills-settings"
+        role="tab"
+        aria-controls="v-pills-settings"
+        aria-selected="false"
+        >Settings</a
+      >
+    </div>
+  </nav>
+</div>
