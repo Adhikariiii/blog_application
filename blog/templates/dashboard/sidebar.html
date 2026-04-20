@@ -27,10 +27,8 @@
         >Categories</a
       >
       <a
-        class="nav-link text-dark"
-        id="v-pills-messages-tab"
-        data-toggle="pill"
-        href="#v-pills-messages"
+        class="nav-link text-dark {% if '/posts/' in request.path %} bg-warning {% endif %}"
+        href="{% url 'posts' %}"
         role="tab"
         aria-controls="v-pills-messages"
         aria-selected="false"

@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'blog',
     'about',
     'dashboard',
+    'crispy_forms',
+    'crispy_bootstrap5',
   
 ]
 
@@ -127,3 +129,5 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

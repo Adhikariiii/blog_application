@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block content%}
+<div class="row">
+  {% include 'dashboard/sidebar.html' %}
+  <div class="col-md-9">
+    <div class="tab-content" id="v-pills-tabContent">
+      <a href="{% url 'add_post' %}">Add Posts</a>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">S.N</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Author</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Updated at</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cat in posts %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{cat.title}}</td>
+            <td>{{cat.category}}</td>
+            <td>{{cat.author}}</td>
+            <td>{{cat.created_at}}</td>
+            <td>{{cat.updated_at}}</td>
+
+            <td>
+              <!-- <a href="{% url 'edit_category' cat.id %}"
+                ><i class="fa fa-edit text-success"></i
+              ></a>
+              &nbsp;
+              <a href="{% url 'delete_category' cat.id %}"
+                ><i class="fa fa-trash text-danger" aria-hidden="true"></i -->
+              <!-- ></a> -->
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock%}
