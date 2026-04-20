@@ -3,6 +3,8 @@ from blog.models import Category, Blog
 from django.contrib.auth.decorators import login_required
 from .forms import AddCategory, AddPost
 from django.utils.text import slugify
+from django.contrib import messages
+
 
 
 
@@ -87,3 +89,29 @@ def add_post(request):
         'form':form
     }
     return render(request, 'dashboard/add_post.html', context)
+
+def edit_post(request, pk ):
+    post = Blog.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = AddPost(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save()
+            title = form.cleaned_data['title']
+            post.slug = slugify(title) + '-' + str(pk)
+            post.save()
+            return redirect('posts')
+    form = AddPost(instance=post)
+    context = {
+        'form': form,
+        'post':post
+    }
+    return render(request, 'dashboard/edit_post.html', context)
+
+
+def delete_post(request, pk ):
+    post = Blog.objects.get(pk=pk)
+
+    post.delete()
+    messages.info(request, 'successfully deleted')
+
+    return redirect('posts')

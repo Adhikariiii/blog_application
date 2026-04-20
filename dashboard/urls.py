@@ -8,5 +8,7 @@ urlpatterns = [
     path('dashboard/delete_category/<int:pk>', views.delete_category, name='delete_category'),
     path('dashboard/posts/', views.posts, name='posts'),
     path('dashboard/add_post', views.add_post, name='add_post'),
+    path('dashboard/edit_post/<int:pk>', views.edit_post, name='edit_post'),
+    path('dashboard/delete_post/<int:pk>', views.delete_post, name='delete_post'),
 
 ]

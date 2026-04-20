@@ -27,13 +27,13 @@
             <td>{{cat.updated_at}}</td>
 
             <td>
-              <!-- <a href="{% url 'edit_category' cat.id %}"
+              <a href="{% url 'edit_post' cat.id %}"
                 ><i class="fa fa-edit text-success"></i
               ></a>
               &nbsp;
-              <a href="{% url 'delete_category' cat.id %}"
-                ><i class="fa fa-trash text-danger" aria-hidden="true"></i -->
-              <!-- ></a> -->
+              <a href="{% url 'delete_post' cat.id %}"
+                ><i class="fa fa-trash text-danger" aria-hidden="true"></i
+              ></a>
             </td>
           </tr>
           {% endfor %}
