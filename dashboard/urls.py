@@ -2,13 +2,23 @@ from django.urls import path
 from . import views
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
+    #categories
     path('dashboard/categories/', views.categories, name='categories'),
     path('dashboard/add_category', views.add_category, name='add_category'),
     path('dashboard/edit_category/<int:pk>', views.edit_category, name='edit_category'),
     path('dashboard/delete_category/<int:pk>', views.delete_category, name='delete_category'),
+    #posts
     path('dashboard/posts/', views.posts, name='posts'),
     path('dashboard/add_post', views.add_post, name='add_post'),
     path('dashboard/edit_post/<int:pk>', views.edit_post, name='edit_post'),
     path('dashboard/delete_post/<int:pk>', views.delete_post, name='delete_post'),
+    #users
+    path('dashboard/users', views.users, name='users'),
+    path('dashboard/add_user', views.add_user, name='add_user'),
+    path('dashboard/edit_user/<int:pk>', views.edit_user, name='edit_user'),
+    path('dashboard/delete_user/<int:pk>', views.delete_user, name='delete_user'),
+
+
+    
 
 ]

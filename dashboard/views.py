@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render
 from blog.models import Category, Blog
 from django.contrib.auth.decorators import login_required
-from .forms import AddCategory, AddPost
+from .forms import AddCategory, AddPost, RegistrationForm, UserEditForm
 from django.utils.text import slugify
 from django.contrib import messages
-
+from django.contrib.auth.models import User
 
 
 
@@ -41,7 +41,7 @@ def add_category(request):
 
     return render(request, 'dashboard/add_category.html', context)
 
-
+@login_required(login_url='login')
 def edit_category(request, pk ):
     category_edit = Category.objects.get(pk=pk)
 
@@ -71,7 +71,7 @@ def posts(request):
         'posts': posts,
     }
     return render(request, 'dashboard/posts.html', context)
-
+@login_required(login_url='login')
 def add_post(request):
     if request.method == 'POST':
         form = AddPost(request.POST, request.FILES)
@@ -90,24 +90,25 @@ def add_post(request):
     }
     return render(request, 'dashboard/add_post.html', context)
 
-def edit_post(request, pk ):
-    post = Blog.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = AddPost(request.POST, request.FILES, instance=post)
-        if form.is_valid():
-            post = form.save()
-            title = form.cleaned_data['title']
-            post.slug = slugify(title) + '-' + str(pk)
-            post.save()
-            return redirect('posts')
-    form = AddPost(instance=post)
-    context = {
-        'form': form,
-        'post':post
-    }
-    return render(request, 'dashboard/edit_post.html', context)
+def edit_post(request, pk):
+        post = Blog.objects.get(pk=pk)
+        form = AddPost(instance=post)
+        if request.method == 'POST':
+            form = AddPost(request.POST, request.FILES, instance=post)
+            if form.is_valid():
+             post = form.save()
+             title = form.cleaned_data['title']
+             post.slug = slugify(title) + '-' + str(pk)
+             post.save()
+             return redirect('posts')
 
 
+        context = {
+            'form': form,
+            'post': post
+        }
+        return render(request, 'dashboard/edit_post.html', context)
+@login_required(login_url='login')
 def delete_post(request, pk ):
     post = Blog.objects.get(pk=pk)
 
@@ -115,3 +116,59 @@ def delete_post(request, pk ):
     messages.info(request, 'successfully deleted')
 
     return redirect('posts')
+
+
+def users(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, 'dashboard/users.html', context)
+
+@login_required(login_url='login')
+def add_user(request):
+    form = RegistrationForm()
+
+    if request.method == 'POST':
+
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('users')
+        else:
+            messages.info(request, 'something went wrong')
+            return redirect('add_user')
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard/add_user.html', context)
+
+def edit_user(request, pk):
+    user = User.objects.get(pk=pk)
+    form = UserEditForm(instance=user) 
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user) 
+
+        if form.is_valid:
+            form.save()
+            messages.info(request, 'user successfully edited!')
+            return redirect('users')
+        else:
+            messages.info(request, 'something went wrong!')
+            print(form.errors)
+            return render('edit_user')
+            
+    context = {
+        'user': user,
+        'form' : form
+    }
+
+    return render(request, 'dashboard/edit_user.html', context)
+
+def delete_user(request, pk):
+    user = User.objects.get(pk=pk)
+    user.delete()
+    messages.info(request, 'user deleted successfully')
+    return redirect('users')

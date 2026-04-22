@@ -17,7 +17,7 @@
         >Dashboard</a
       >
       <a
-        class="nav-link text-dark {% if 'categories/' in request.path%} bg-warning {% endif %}"
+        class="nav-link text-dark {% if 'categories' in request.path%} bg-warning {% endif %}"
         id="v-pills-profile-tab"
         data-toggle="pill"
         href="{% url 'categories' %}"
@@ -27,23 +27,23 @@
         >Categories</a
       >
       <a
-        class="nav-link text-dark {% if '/posts/' in request.path %} bg-warning {% endif %}"
+        class="nav-link text-dark {% if 'posts' in request.path %} bg-warning {% endif %}"
         href="{% url 'posts' %}"
         role="tab"
         aria-controls="v-pills-messages"
         aria-selected="false"
         >Post</a
       >
+      {% if perms.auth.add_user%}
       <a
-        class="nav-link text-dark"
-        id="v-pills-settings-tab"
-        data-toggle="pill"
-        href="#v-pills-settings"
+        class="nav-link text-dark {% if 'users' in request.path %} bg-warning {% endif %}"
+        href="{% url 'users' %}"
         role="tab"
-        aria-controls="v-pills-settings"
+        aria-controls="v-pills-messages"
         aria-selected="false"
-        >Settings</a
+        >Users</a
       >
+      {% endif %}
     </div>
   </nav>
 </div>
