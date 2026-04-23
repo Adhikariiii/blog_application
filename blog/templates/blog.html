@@ -35,5 +35,40 @@
       </div>
     </div>
   </div>
+  {% if comment_count %}
+  <span>comment ({{comment_count}})</span>
+  {% endif %}
+  <div class="card m-3 p-3">
+    {% if comments %}
+      {% for comment in comments %}
+      <small> <mark>{{comment.user}}</mark></small>
+      <li class="list-group-item mb-2">{{comment}}</li>
+        <small>{{comment.created_at | timesince }}</small>
+        <hr>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+  {% else %}
+  <div class="card">
+    <small class="p-3 mb-4">no comments yet</small>
+  </div>
+  {%endif%}
+
+
+
+  <form action="" method="POST" class="m-5">
+    {% csrf_token %}
+    <label for="">comment</label>
+    <textarea
+      type="text"
+      class="form-control p-4"
+      placeholder="enter your comment here"
+      name="comment"
+    >
+    </textarea>
+    <input type="submit" class="btn btn-primary" value="submit" />
+  </form>
 </main>
 {% endblock %}

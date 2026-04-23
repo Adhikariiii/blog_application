@@ -1,8 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as log_out
 from django.contrib import messages
-from .models import Category, Blog
+from .models import Category, Blog, Comment
 from about.models import About, Socials
 from django.db.models import Q
 
@@ -45,8 +46,21 @@ def post_by_category(request, category_id):
 def blog(request, slug):
         try:
             blog = get_object_or_404(Blog,  slug=slug)
+            if request.method == 'POST':
+                 comment = Comment()
+                 comment.user = request.user
+                 comment.blog = blog
+                 comment.comment = request.POST['comment']
+                 comment.save()
+                 return HttpResponseRedirect(request.path_info)
+            comments = Comment.objects.filter(blog=blog)
+            comment_count = comments.count()
+     
+
             context = {
-                'blog': blog
+                'blog': blog,
+                'comments': comments,
+                'comment_count': comment_count
                     }
             return render(request, 'blog.html', context )
         except:
