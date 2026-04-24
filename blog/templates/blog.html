@@ -38,11 +38,11 @@
   {% if comment_count %}
   <span>comment ({{comment_count}})</span>
   {% endif %}
-  <div class="card m-3 p-3">
+  <div class="card p-3 ms-3 me-5">
     {% if comments %}
       {% for comment in comments %}
-      <small> <mark>{{comment.user}}</mark></small>
-      <li class="list-group-item mb-2">{{comment}}</li>
+      <small> <mark>@{{comment.user}}</mark></small>
+      <li class="list-group-item mb-2 me-5">{{comment}}</li>
         <small>{{comment.created_at | timesince }}</small>
         <hr>
         {% endfor %}
@@ -57,7 +57,7 @@
   {%endif%}
 
 
-
+{% if user.is_authenticated %}
   <form action="" method="POST" class="m-5">
     {% csrf_token %}
     <label for="">comment</label>
@@ -70,5 +70,9 @@
     </textarea>
     <input type="submit" class="btn btn-primary" value="submit" />
   </form>
+  {% else %}
+  <p class="text-start">must login to put a comment <a href="{% url 'login' %}">login</a></p>
+  
+  {% endif %}
 </main>
 {% endblock %}
